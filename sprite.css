@@ -1,0 +1,8 @@
+.actions {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    outline: 1px solid black;
+}.actions button {
+    background-image: url('../goit-markup-hw-04/images/svg/antenna.svg');
+}

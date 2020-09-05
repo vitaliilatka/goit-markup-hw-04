@@ -16,8 +16,14 @@ body {
     line-height: 1.71;
     letter-spacing: 0.03em;
 }
+/* базовые настройки картинок */
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
 /* Убирает подчеркивание у всех ссылок */
-a {
+.link {
     text-decoration: none;
 }
 /* Убирает флажки и отступы у элементов списков */
@@ -26,6 +32,17 @@ a {
     margin: 0;
     list-style: none;
 }
+/* прячет скрытые заголовки */
+.hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+}
 
 /* Страница студия */
 /* Задает общие настройки шрифта хедера */
@@ -33,32 +50,21 @@ a {
     font-weight: 500;
     line-height: 1.14;
     letter-spacing: 0.02em;
+    border-bottom: 1px solid #ececec;
 }
-/* весь хэдер в одну строку */
-.header-flex {
-    display: flex;
-    align-items: center;
+/* Геометрия контейнера */
+.container {
+    width: 1200px;
+    margin: 0px auto;
+    padding: 0px 15px;
 }
-/* логотип и навигация в одну строку */
-.nav-flex {
-    display: flex;
-    align-items: center;
-}
-/* Логотип хедера */
-.header-logo {
-    margin-right: 93px;
-    color: #000000;
-    font-family: "Raleway", sans-serif;
-    font-weight: 700;
-    font-size: 26px;
-    line-height: 1.19;
-    letter-spacing: 0.03em;
-}
-/* элементы навигации в строку */
+/* флексбокс хэдера */
+.header-flex,
 .nav-main {
-    display: flex;
+  display: flex;
+  align-items: center;
 }
-/* все кроме последнего элемента навигации */
+/* отступ всем кроме последнего элемента хэдера */
 .nav-main > .item:not(:last-child) {
     margin-right: 50px;
 }
@@ -69,50 +75,82 @@ a {
     padding-bottom: 32px;
     color: inherit;
 }
-/* Выделение активной страницы хэдера + Web в логотипе */
+/* Цветовой акцент элементов */
 .nav-main .link.current,
 .header-logo .current,
-.footer-logo .current {
-  color: var(--accent-color);
-}
-/* цвет текста основной навигации при акценте*/
+.footer-logo .current,
 .nav-main .link:hover,
-.nav-main .link:focus {
+.nav-main .link:focus,
+.header-info .link:hover,
+.header-info .link:focus,
+.footer-info .link:hover,
+.footer-info .link:focus {
   color: var(--accent-color);
 }
-/* телефон и почту хэдера в строку */
+
+/* Логотип хедера */
+.header-logo {
+    margin-right: 93px;
+    color: #000000;
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 1.19;
+    letter-spacing: 0.03em;
+}
+/* контакты хэдера в строку */
 .header-info {
     display: flex;
     margin-left: auto;
 }
-/* все кроме последнего элемента списка header-info*/
 .header-info .item:not(:last-child) {
-    margin-right: 50px;
+    margin-right: 30px;
 }
-/* инфо часть навигации */
+/* контакты хэдера */
 .header-info .link {
-    display: block;
+    display: flex;
+    align-items: center;
     padding-top: 32px;
     padding-bottom: 32px;
     color: var(--second-text-color);
 }
-/* цвет текста инфо части навигации при акценте */
-.header-info .link:hover,
-.header-info .link:focus {
-  color: var(--accent-color);
+/* отступ иконок в хэдере */
+.header-info .icon {
+    margin-right: 10px;
 }
+/* акцент иконок в хэдере */
+.header-info .link:hover > .icon,
+.header-info .link:focus > .icon {
+  --color1: var(--accent-color);
+}
+
 /* герой */
 .hero {
-    padding-top: 200px;
-    padding-bottom: 200px;
-    margin-bottom: 94px;
-    background-color: var(--third-bg-color);
+    background-color: #c4c4c4;
     text-align: center;
+    max-width: 1600px;
+    height: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #c4c4c4;
+    background-image: linear-gradient(
+      to right,
+      rgba(47, 48, 58, 0.4),
+      rgba(47, 48, 58, 0.4)
+    ),
+    url("../images/hero.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 /* Заголовок героя */
 .hero-title {
     margin-top: 0;
     margin-bottom: 30px;
+    max-width: 696px;
     color: var(--main-bg-color);
     font-weight: 900;
     font-size: 44px;
@@ -126,6 +164,7 @@ a {
     min-width: 200px;
     padding: 10px 32px;
     border-radius: 4px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 
     color: var(--main-bg-color);
     background-color: var(--accent-color);
@@ -135,26 +174,47 @@ a {
     text-align: center;
     letter-spacing: 0.06em;
 }
-/* список преимуществ в строку */
-.feature {
+.button.primary:hover,
+.button.primary:focus {
+    background-color: #188ce8;
+}
+/* отступы секции преимуществ */
+.section.feature {
+    padding-top: 94px;
+    padding-bottom: 0;
+}
+/* флексбокс */
+.flex {
     display: flex;
 }
-/* наполнение контейнера преимуществ */
-.feature .item {
+/* ширина элементов секции Преимущества */
+.feature-list .item {
     flex-basis: calc((100% - 3 * 30px) / 4);
 }
+/* фон иконки преимуществ */
+.feature-list .thumb {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    height: 120px;
+    background-color: var(--secohd-bg-color);
+    border-radius: 4px;
+}
+/* иконка преимуществ */
+.feature-list .icon {
+    width: 70px;
+    height: 70px;
+}
 /* отступы всем кроме последнего элемента списка перимуществ */
-.feature .item:not(:last-child) {
+.feature-list .item:not(:last-child),
+.examples-list .item:not(:last-child),
+.team-list .item:not(:last-child),
+.clients-list .item:not(:last-child) {
     margin-right: 30px;
 }
-/* паддинг всем секциям */
-.section {
-    padding-top: 94px;
-    padding-bottom: 94px;
-}
-
 /* Заголовки h3 секции преимущества */
-.feature .title {
+.feature-list .title {
     margin-top: 0;
     margin-bottom: 10px;
 
@@ -163,11 +223,16 @@ a {
     text-transform: uppercase;
 }
 /* Текст секции преимущества */
-.feature .text {
+.feature-list .text {
     margin-top: 0;
     margin-bottom: 0;
 
     color: var(--second-text-color);
+}
+/* паддинг всем секциям */
+.section {
+    padding-top: 94px;
+    padding-bottom: 94px;
 }
 
 /* Заголовки секций */
@@ -179,53 +244,23 @@ a {
     line-height: 1.17;
     text-align: center;
 }
-/* оформление последней секции  */
-.section:last-child {
-    padding-top: 94px;
-    padding-bottom: 94px;
-    background-color: var(--secohd-bg-color);
-    text-align: center;
-}
-
-/* список примеров работ в строку */
-.examples-list {
-    display: flex;
-}
+/* ширина контента секкции */
 .examples-list .item {
     flex-basis: calc((100% - 2 * 30px) / 3);
 }
-/* отступы всем кроме последнего элемента списка */
-.examples-list .item:not(:last-child) {
-    margin-right: 30px;
-}
-/* отступы секции преимуществ */
-.section.feature {
-    padding-top: 94px;
-    padding-bottom: 0;
-}
-
-/* уберем лишние пиксели внизу у картинок */
-.examples-list .item > img {
-    display: block;
-}
-/* список команды */
-.team-list {
-    display: flex;
+/* оформление секции команда  */
+.section.team {
+    background-color: var(--secohd-bg-color);
+    text-align: center;
 }
 /* элементы списка наша команда */
 .team-list .item {
     flex-basis: calc((100% - 3 * 30px) / 4);
     border-radius: 0px 0px 4px 4px;
     background-color: var(--main-bg-color);
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px, 2px, 1px, rgba(0, 0, 0, 0.2);
 }
-/*отступ всем кроме последнего элемента списка */
-.team-list .item:not(:last-child) {
-    margin-right: 30px;
-}
-/* уберем лишние пиксели внизу у картинок */
-.team-list .item > img {
-    display: block;
-}
+
 /* Заголовки h3 Наша команда */
 .team-list .title {
     margin-top: 30px;
@@ -238,18 +273,84 @@ a {
 /* Текст секции Наша команда */
 .team-list .text {
     margin-top: 0;
-    margin-bottom: 30px;
+    margin-bottom: 16px;
 
     color: var(--second-text-color);
     font-size: 16px;
     line-height: 1.19;
 }
+/* Список соцсетей */
+.team .network-list {
+    margin-bottom: 30px;
+    justify-content: center;
+}
+.network-list .item:not(:last-child) {
+    margin-right: 10px;
+}
+/* ссылка на соцсеть */
+.network-list .link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+}
+/* меняем фон ссылки при ховере */
+.network-list .link:hover,
+.network-list .link:focus {
+  background-color: var(--accent-color);
+}
+/* меняем цвет самой иконки при ховере */
+.network-list .link:hover > .icon,
+.network-list .link:focus > .icon {
+  --color4: var(--main-bg-color);
+}
+/* иконка */
+.network-list .icon {
+    width: 20px;
+    height: 20px;
+}
+/* ширина элеентов секции клиенты */
+.clients-list .item {
+    flex-basis: calc((100% - 5 * 30px) / 6);
+}
+/* ссылка клиентов */
+.clients-list .link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90px;
+    border: 1px solid #afb1b8;
+    border-radius: 4px;
+}
+/* цвет рамки при ховере */
+.clients-list .link:hover,
+.clients-list .link:focus {
+  border-color: var(--accent-color);
+}
+/*  цвет иконки при ховере */
+.clients-list .link:hover > .icon,
+.clients-list .link:focus > .icon {
+  --color4: var(--accent-color);
+}
+
 /* футер */
 .footer {
     padding-top: 60px;
     padding-bottom: 60px;
 
     background-color: var(--third-bg-color);
+}
+.footer .flex {
+    align-items: baseline;
+}
+.footer-address,
+.footer-networks {
+  width: 270px;
+}
+.footer-address {
+    margin-right: 30px;
 }
 /* лого футера */
 .footer-logo {
@@ -260,7 +361,7 @@ a {
     line-height: 1.19;
 }
 /* адрес футера */
-.footer-address {
+.footer-contacts {
     margin-top: 20px;
 
     font-style: normal;
@@ -272,11 +373,27 @@ a {
     color: var(--main-bg-color);
 }
 /* почта и телефон футера */
-.footer-address .link {
+.footer-contacts .link {
     display: inline-block;
     margin-top: 9px;
 
     color: rgba(255, 255, 255, 0.6);
+}
+/* текст блока соцсетей футера */
+.footer-networks .text {
+    display: block;
+    margin-bottom: 20px;
+    line-height: 1.14;
+    text-transform: uppercase;
+    color: var(--main-bg-color);
+}
+/* фон ссылкт на соцсеть в футере */
+.footer-networks .link {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+/* цвет иконки в футере */
+.footer-networks .icon {
+    --color4: var(--main-bg-color);
 }
 /* акцент для почты и телефона в футере */
 .footer-address .link:hover,
@@ -290,7 +407,6 @@ a {
 .header.marg {
     margin-bottom: 94px;
 }
-
 /* отступы основного блока портфолио */
 .portfolio {
     margin-bottom: 94px;
@@ -300,7 +416,7 @@ a {
 .portfolio-nav {
     display: flex;
     justify-content: center;
-    margin-bottom: 34px;
+    margin-bottom: 50px;
 }
 /* отступ у всех кнпопок кроме последней */
 .portfolio-nav .item:not(:last-child) {
@@ -314,9 +430,10 @@ a {
     padding: 6px 22px;
     border: 1px solid transparent;
     border-radius: 4px;
+    cursor: pointer;
 
     color: var(--main-text-color);
-    background-color: var(--secohd-bg-color);
+    background-color: var(--second-bg-color);
     font-family: inherit;
     font-weight: 500;
     font-size: 16px;
@@ -336,12 +453,9 @@ a {
 }
 /* основные элементы страницы портфолио */
 .portfolio-list .item {
-    width: calc((100% - 2 * 30px) / 3);
+    flex-basis: calc((100% - 2 * 30px) / 3);
     margin-right: 30px;
     margin-bottom: 30px;
-    border: 1px solid #eeeeee;
-    box-sizing: border-box;
-
 }
 /* каждому третьему убираем правый марджин */
 .portfolio-list .item:nth-child(3n) {
@@ -351,9 +465,9 @@ a {
 .portfolio-list .item:nth-last-child(-n + 3) {
     margin-bottom: 20px;
 }
-/* уберем лишние пиксели внизу у картинок */
-.portfolio-list .link > img {
-    display: block;
+.portfolio-list .item:hover {
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
+      1px 4px 6px rgba(0, 0, 0, 0.16);
 }
 /* заголовки элементов портфолио */
 .portfolio-list .title {
@@ -364,7 +478,6 @@ a {
     line-height: 2;
     letter-spacing: 0.06em;
 }
-
 /* названия проектов */
 .project-name {
     padding: 20px 24px;
@@ -375,21 +488,7 @@ a {
 /* текст элементов портфолио */
 .portfolio-list .text {
     margin: 0;
-
     color: var(--second-text-color);
     font-size: 16px;
     line-height: 1.87;
-}
-
-/* Геометрия контейнера */
-.container {
-    width: 1200px;
-    margin: 0px auto;
-    padding: 0px 15px;
-}
-/* Временно уберем марджины у скрытых заголовка */
-.hidden {
-    display: none;
-    margin-top: 0;
-    margin-bottom: 0;
 }
