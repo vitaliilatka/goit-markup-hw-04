@@ -330,8 +330,8 @@ img {
   border-color: var(--accent-color);
 }
 /*  цвет иконки при ховере */
-.clients-list .link:hover > .icon,
-.clients-list .link:focus > .icon {
+.clients-list .link:hover .icon,
+.clients-list .link:focus .icon {
   --color4: var(--accent-color);
 }
 
